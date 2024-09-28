@@ -7,7 +7,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<FramFrameworkReference InInclude=""Microsoft.AspNetCore.App" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.0-preview.2.23153.2" />
 	</ItemGroup>
