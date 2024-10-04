@@ -1,13 +1,18 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
+
 @if (SignInManager.IsSignedIn(User))
 {
+    var role = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList()[0];
     <li class="nav-item">
-            <a id="manage" class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            <a id="manage" class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                Hello @role @UserManager.GetUserName(User)!
+            </a>
     </li>
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
