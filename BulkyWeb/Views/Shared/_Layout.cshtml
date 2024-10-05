@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,7 +17,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+        <nav class="fixed-top navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BulkyWeb</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -31,8 +34,8 @@
                             <a class="nav-link text-light" asp-area="Admin" asp-controller="Order" asp-action="Index">Manage Order</a>
                         </li>
                         @*check if role is admin then show dropdown selection*@
-                        @* @if (User.IsInRole(SD.Role_Admin))
-                        { *@
+                        @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                        { 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Content Management
@@ -49,15 +52,19 @@
                                     </li>
 
                                     <li><hr class="dropdown-divider"></li>
+
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create User</a>
+                                    </li>
                                 </ul>
                             </li>
-                        @* } *@
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
-                                <i class=" bi bi-cart"></i> &nbsp; (0)
+                                @await Component.InvokeAsync("ShoppingCart")
                             </a>
                         </li>
-
 
                     </ul>
                     <partial name="_LoginPartial" />
@@ -65,7 +72,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="padding-top: 70px;">
         <main role="main" class="pb-3">
             <partial name="_Notification" />
             @RenderBody()
