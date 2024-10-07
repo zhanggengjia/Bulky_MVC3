@@ -142,7 +142,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
             {
                 // It is a regular customer account and we need to capture payment
                 // stripe logic
-                var domain = "https://localhost:7012/";
+                var domain = Request.Scheme + "://" + Request.Host.Value + "/";
                 var options = new SessionCreateOptions
                 {
                     SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}", // 支付成功後重定向的 URL
